@@ -1,0 +1,342 @@
+
+<div id="telainicial" *ngIf="problema==0">
+    <input name="bemvindo" id="bemvindo" type="image" src="../assets/bemvindo_2.png" />
+
+
+    <div class="row">
+      <div class="col-md-4"></div>
+        <div class="col-md-6">
+                                  
+            <div class="card" id="card" style="background-color: #649CFF; width: 27em; border-radius: 10px;" >
+              <div class="card-body form-group">
+
+                <input type="image" src="../assets/botao_problema1_2.png" name="problema1" id="problema1" (click)="setProblema1()" />
+                <br>
+               <input type="image" src="../assets/botao_problema2_2.png" name="problema2" id="problema2" (click)="setProblema2()" />
+                <br>
+                <input type="image" src="../assets/botao_problema3_2.png" name="problema3" id="problema3" (click)="setProblema3()" />
+                <br>
+                <input type="image" src="../assets/botao_problema4_2.png" name="problema4" id="problema4" (click)="setProblema4()" />
+              
+              </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="titulo1" *ngIf="problema==1">
+  <input name="titulo_palindromos" id="titulo_palindromos" type="image" src="../assets/titulo_palindromos.png"/><br>
+  <input type="image" src="../assets/voltar.png" (click)="voltar()"/>
+</div>
+
+<div id="titulo2" *ngIf="problema==2">
+  <input name="titulo_compra" id="titulo_compra" type="image" src="../assets/titulo_compra.png"/><br>
+  <input type="image" src="../assets/voltar.png" (click)="voltar()"/>
+</div>
+
+<div id="titulo3" *ngIf="problema==3">
+  <input name="imgveiculo" id="imgveiculo" type="image" src="../assets/veiculos.png" name="carro" /><br>
+  <input type="image" src="../assets/voltar.png" (click)="voltar()"/>
+</div>
+
+<div id="titulo4" *ngIf="problema==4">
+  <input name="titulo_cep" id="titulo_cep" type="image" src="../assets/titulo_ceps.png"/><br>
+  <input type="image" src="../assets/voltar.png" (click)="voltar()"/>
+</div>
+
+<br>
+  
+<form [formGroup]="form">
+
+  <div class="row" *ngIf="problema==1">
+
+    <div class="row" *ngIf="alerta_palindromos==1">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="alert alert-danger" role="alert">
+            Números inválidos! Tente novamente!
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="col-md-4"></div>
+    <div class="col-md-6">
+
+      <div class="card" id="card" style="background-color: #649CFF; width: 25rem; border-radius: 10px;" >
+        <div class="card-body form-group">
+
+            <input type="text" class="form-control" name="num1" id="num1" placeholder="Número 1" formControlName="num1" maxlength="11"/><br>
+            <input type="text" class="form-control" name="num2" id="num2" placeholder="Número 2" formControlName="num2" maxlength="11"/><br>
+
+            <input type="image" src="../assets/enviar.png" name="botao_enviar" id="botao_enviar" (click)="recebeInputPalindromos()"/>
+
+        </div>
+      </div>
+
+      <br>
+
+        <div class="card" id="card" style="background-color: #649CFF; width: 25rem; border-radius: 10px;">
+            <div class="card-body form-group">
+              <h5 class="card-title">Palíndromos:</h5>
+              <div *ngFor="let palindromo of lista_palindromos">
+                  <br> {{palindromo}} <br>
+              </div>
+            </div>
+        </div>
+        <br>
+    
+
+    </div>
+
+  </div>
+
+  <div class="row" *ngIf="problema==2">
+
+      <div class="row" *ngIf="alerta_compra==1">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <div class="alert alert-danger" role="alert">
+              Dados inválidos! Tente novamente!
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="col-md-4"></div>
+      <div class="col-md-6">
+
+        <div class="card" id="card" style="background-color: #649CFF; width: 25rem; border-radius: 10px;" >
+          <div class="card-body form-group">
+
+              <input type="text" class="form-control" name="preco" id="preco" placeholder="Valor da compra" formControlName="preco" maxlength="11"/><br>
+              <input type="text" class="form-control" name="dinheiro" id="dinheiro" placeholder="Dinheiro entregue ao caixa" formControlName="dinheiro" maxlength="11"/><br>
+
+              <input type="image" src="../assets/enviar.png" name="botao_enviar" id="botao_enviar" (click)="recebeInputCompra()" />
+
+          </div>
+        </div>
+
+        <br>
+
+          <div class="card" id="card" style="background-color: #649CFF; width: 25rem; border-radius: 10px;" *ngIf="alerta_compra==0">
+              <div class="card-body form-group">
+                <h5 class="card-title">Compra:</h5>
+                <strong>Troco:</strong>{{troco}} <br>
+                <strong>Notas de 100:</strong> {{notas_cem}} <br>
+                <strong>Notas de 10:</strong> {{notas_dez}} <br>
+                <strong>Notas de 1:</strong> {{notas_um}} <br>
+              </div>
+          </div>
+          <br>
+
+    </div>
+
+  </div>
+
+  <div class="row" *ngIf="problema==3">
+
+    <div class="col-md-4"></div>
+    <div class="col-md-4" id="card_veiculo">
+        <fieldset>
+          <div class="row">
+            <div class="col-md-3"></div>
+
+            <div class="col-md-6">
+
+              <label for="veiculo">Selecione o tipo do veículo</label>
+              <select (click)="verificaVeiculo()" class="form-select" aria-label="Default select example" name="veiculo" id="veiculo" formControlName="veiculo">
+                <option selected></option>
+                <option value="carro">Carro</option>
+                <option value="moto">Moto</option>
+              </select><br><br>
+
+            </div>
+
+            <div class="col-md-3"></div>
+            
+          </div>
+
+          <div class="row">
+
+              <div class="col-md-6">
+                    
+                  <div class="card" id="card" style="background-color: #649CFF; width: 25rem; border-radius: 10px;" *ngIf="veiculo!=''" >
+                    <div class="card-body form-group">
+        
+        
+                      <div class="qtd_rodas" *ngIf="veiculo=='moto'">
+        
+                        <input type="text" name="qtd_rodas" id="qtd_rodas" formControlName="qtd_rodas" class="moto form-control" placeholder="Quantidade de Rodas">
+                        
+                      </div>
+                      
+                      <br>
+            
+                      <div class="passageiros" *ngIf="veiculo=='moto'">
+        
+                        <input type="text" name="passageiros" id="passageiros" formControlName="passageiros" class="moto form-control" placeholder="Passageiros">
+                      
+                      </div>
+            
+        
+                      <div class="qtd_portas" *ngIf="veiculo=='carro'">
+        
+                          <input type="text" name="qtd_portas" id="qtd_portas" formControlName="qtd_portas" class="carro form-control" placeholder="Quantidade de Portas">
+                      </div>
+        
+                      <br>
+            
+                      <div class="modelo" *ngIf="veiculo!=''">
+                          <input type="text" name="modelo" id="modelo" formControlName="modelo" class="form-control" placeholder="Modelo">
+                      </div>
+            
+                      <br>
+            
+                      <div class="ano_fabricacao" *ngIf="veiculo!=''">
+        
+                        <input type="text" name="ano_fabricacao" id="ano_fabricacao" formControlName="ano_fabricacao" class="form-control" placeholder="Ano de Fabricação">  
+                      </div>
+                      <br>
+            
+                      <div class="marca" *ngIf="veiculo!=''">
+        
+                        <input type="text" name="marca" id="marca" formControlName="marca" class="form-control" placeholder="Marca">  
+                      </div>
+        
+                      <br>
+            
+                      <input type="image" src="../assets/adicionar_carro.png" name="botao_carro" id="botao_carro" (click)="adicionaCarro()" *ngIf="veiculo=='carro'"/>
+                      <input type="image" src="../assets/adicionar_moto.png" name="botao_moto" id="botao_moto" (click)="adicionaMoto()" *ngIf="veiculo=='moto'"/>
+                    </div>
+                  </div>
+
+              </div>
+              <div class="col-md-2"></div>
+          </div>
+      </fieldset>
+
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+
+  <div id="problema4" *ngIf="problema==4">
+
+    <div class="row" *ngIf="alerta_cep==1">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <div class="alert alert-danger" role="alert">
+              Dados do cep inválidos! Favor tentar novamente!
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-6">
+            
+            <div class="card" id="card" style="background-color: #649CFF; width: 25rem; border-radius: 10px;" >
+              <div class="card-body form-group">
+
+                  <input type="text" class="form-control" name="cep1" id="cep1" placeholder="CEP 1" formControlName="cep1" maxlength="8"/><br>
+                  <input type="text" class="form-control" name="cep2" id="cep2" placeholder="CEP 2" formControlName="cep2" maxlength="8"/><br>
+                  <input type="text" class="form-control" name="cep3" id="cep3" placeholder="CEP 3" formControlName="cep3" maxlength="8"/><br>
+                  <input type="text" class="form-control" name="cep4" id="cep4" placeholder="CEP 4" formControlName="cep4" maxlength="8"/><br>
+                  <input type="text" class="form-control" name="cep5" id="cep5" placeholder="CEP 5" formControlName="cep5" maxlength="8"/><br>
+
+                  <input type="image" src="../assets/enviar.png" name="botao_enviar" id="botao_enviar" (click)="chamarViaCep()"/>
+
+              </div>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-6">
+          <div *ngFor="let cep of ceps">
+                <div class="card" id="card" style="background-color: #649CFF; width: 25rem; border-radius: 10px;" *ngIf="qtd_ceps!=0" >
+                    <div class="card-body form-group">
+                      <h5 class="card-title">CEP:</h5>
+
+                      <strong>Bairro:</strong> {{cep.getBairro()}}<br>
+                      <strong>CEP:</strong> {{cep.getCep()}}<br>
+                      <strong>Complemento</strong> {{cep.getComplemento()}}<br>
+                      <strong>Localidade:</strong> {{cep.getLocalidade()}}<br>
+                      <strong>Logradouro:</strong> {{cep.getLogradouro()}}<br>
+                      <strong>UF:</strong> {{cep.getUF()}}<br><br>
+
+                      <input type="image" src="../assets/remover.png" (click)="removeCep(cep)"/>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+          
+    </div>
+
+
+  </div>
+
+</form>
+  
+<br>
+
+<div class="row" *ngIf="problema==3">
+
+      
+
+    <div class="col-md-4">
+
+    </div>
+
+    <div class="col-md-6">
+
+      <div *ngFor="let carro of carros">
+
+          <div class="card" id="card" style="background-color: #649CFF; width: 25rem; border-radius: 10px;" *ngIf="qtd_veiculos!=0" >
+              <div class="card-body form-group">
+                <h5 class="card-title">Carro:</h5>
+
+                    <br> <strong>Portas:</strong> {{carro.getQtdPortas()}} <br>
+                    <strong>Modelo:</strong> {{carro.getModelo()}} <br>
+                  <strong>Ano de Fabricação:</strong> {{carro.getAnoFabricacao()}} <br>
+                <strong>Marca: </strong>{{carro.getMarca()}} <br><br>
+                  <input type="image" src="../assets/remover.png" (click)="removeCarro(carro)"/>
+
+              </div>
+          </div>
+          <br>
+      </div>
+
+      <div *ngFor="let moto of motos">
+
+        <div class="card" id="card" style="background-color: #649CFF; width: 25rem; border-radius: 10px;" *ngIf="qtd_veiculos!=0" >
+            
+          <div class="card-body form-group">
+
+            <h5 class="card-title">Moto:</h5>
+
+                <br><strong> Rodas: </strong>{{moto.getQtdRodas()}} <br>
+              <strong>Passageiros:</strong> {{moto.getPassageiros()}} <br>
+              <strong>Modelo: </strong>{{moto.getModelo()}} <br>
+              <strong> Ano de Fabricação: </strong>{{moto.getAnoFabricacao()}} <br>
+              <strong>Marca:</strong> {{moto.getMarca()}} <br><br>
+              <input type="image" src="../assets/remover.png" (click)="removeMoto(moto)"/>
+
+            </div>
+
+        </div>
+        <br>
+      </div>
+    </div>
+
+
+
+</div>
+
+
+
